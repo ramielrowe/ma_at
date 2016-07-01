@@ -88,3 +88,8 @@ async def cmd_ark_user_survey(client, message):
              for (online, user_id, name) in tracked_users]
     msg = '\n'.join(lines)
     await client.send_message(message.channel, msg)
+
+
+async def cmd_ark_users_online(client, message):
+    users = ', '.join(steam.ark_users_online())
+    await client.send_message(message.channel, 'Online Users: {}'.format(users))

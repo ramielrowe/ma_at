@@ -17,5 +17,6 @@ docker run -d --name ma-at-app \
     -e "DISCORD_TOKEN=${DISCORD_TOKEN}" \
     -e "STEAM_TOKEN=${STEAM_TOKEN}" \
     -e "ARK_SERVER_ID=${ARK_SERVER_ID}" \
+    -e "ARK_SERVER_ADDR=${ARK_SERVER_ADDR}" \
     -e "ARK_ALERTS_CHAN_ID=${ARK_ALERTS_CHAN_ID}" \
     ma_at

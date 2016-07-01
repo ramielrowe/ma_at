@@ -2,10 +2,14 @@ import os
 
 import requests
 
+from valve.source import a2s
+
 STEAM_TOKEN = os.getenv('STEAM_TOKEN')
 STEAM_USER_URL = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={}&steamids={{user_id}}'.format(STEAM_TOKEN)
 ARK_GAME_ID = '346110'
 ARK_SERVER_ID = os.getenv('ARK_SERVER_ID')
+ARK_SERVER_ADDR = os.getenv('ARK_SERVER_ADDR')
+ARK_SERVER_PORT = int(os.getenv('ARK_SERVER_PORT', 27015))
 
 
 def user_on_ark(steam_user_id):
@@ -21,3 +25,8 @@ def user_on_ark(steam_user_id):
                     steam_user_id,
                     player.get('personaname'))
     return False, steam_user_id, None
+
+
+def ark_users_online():
+    q = a2s.ServerQuerier((ARK_SERVER_ADDR, ARK_SERVER_PORT))
+    return [p['name'] for p in q.get_players()['players'] if p['name']]
