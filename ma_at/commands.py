@@ -1,4 +1,5 @@
 from ma_at import data
+from ma_at import pokemon
 from ma_at import steam
 
 
@@ -93,3 +94,11 @@ async def cmd_ark_user_survey(client, message):
 async def cmd_ark_users_online(client, message):
     users = ', '.join(steam.ark_users_online())
     await client.send_message(message.channel, 'Online Users: {}'.format(users))
+
+
+async def cmd_pokemap(client, message):
+    username = message.author.name
+    args = message.content.split(' ', 1)
+    location = args[1] if len(args) > 1 else None
+    await client.send_message(message.channel,
+                              pokemon.pokemap(username, location))
