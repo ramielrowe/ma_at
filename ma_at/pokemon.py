@@ -41,13 +41,13 @@ def pokemap(username, location):
         'LOCATION': location,
     }
 
-    host_config = docker_client.create_host_config(port_bindings={5000: None})
+    host_config = docker_client.create_host_config(port_bindings={5000: None},
+                                                   mem_limit='128M',
+                                                   memswap_limit='256M')
 
-    new_container = docker_client.create_container(name=container_name,
-                                                   image='pokemap',
-                                                   ports=[5000, ],
-                                                   environment=env,
-                                                   host_config=host_config)
+    new_container = docker_client.create_container(
+        name=container_name,image='pokemap', ports=[5000, ],
+        environment=env, host_config=host_config)
 
     docker_client.start(new_container['Id'])
     port = docker_client.port(new_container['Id'], 5000)[0]['HostPort']
