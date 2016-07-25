@@ -6,6 +6,7 @@ from ma_at import docker_util
 
 GOOGLE_USER = os.getenv('GOOGLE_USER')
 GOOGLE_PASSWORD = os.getenv('GOOGLE_PASSWORD')
+GOOGLE_MAPS_KEY = os.getenv('GOOGLE_MAPS_KEY')
 POKEMAP_DOMAIN = os.getenv('POKEMAP_DOMAIN')
 
 
@@ -36,7 +37,8 @@ def pokemap(username, location):
     env = {
         'GOOGLE_USER': GOOGLE_USER,
         'GOOGLE_PASSWORD': GOOGLE_PASSWORD,
-        'LOCATION': location
+        'GOOGLE_MAPS_KEY': GOOGLE_MAPS_KEY,
+        'LOCATION': location,
     }
 
     host_config = docker_client.create_host_config(port_bindings={5000: None})

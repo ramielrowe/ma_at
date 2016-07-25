@@ -23,5 +23,6 @@ docker run -d --name ma-at-app \
     -e "MA_AT_DOCKER_HOST=${MA_AT_DOCKER_HOST}" \
     -e "GOOGLE_USER=${GOOGLE_USER}" \
     -e "GOOGLE_PASSWORD=${GOOGLE_PASSWORD}" \
+    -e "GOOGLE_MAPS_KEY=${GOOGLE_MAPS_KEY}" \
     -e "POKEMAP_DOMAIN=${POKEMAP_DOMAIN}" \
     ma_at
