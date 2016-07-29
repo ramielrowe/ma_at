@@ -10,7 +10,7 @@ GOOGLE_MAPS_KEY = os.getenv('GOOGLE_MAPS_KEY')
 POKEMAP_DOMAIN = os.getenv('POKEMAP_DOMAIN')
 
 
-def pokemap(username, location):
+def pokemap(username, location, image='pokemap'):
     container_name = 'pokemap-{}'.format(username)
 
     docker_client = docker_util.get_client()
@@ -46,7 +46,7 @@ def pokemap(username, location):
                                                    memswap_limit='256M')
 
     new_container = docker_client.create_container(
-        name=container_name,image='pokemap', ports=[5000, ],
+        name=container_name, image=image, ports=[5000, ],
         environment=env, host_config=host_config)
 
     docker_client.start(new_container['Id'])

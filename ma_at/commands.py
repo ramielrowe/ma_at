@@ -102,3 +102,12 @@ async def cmd_pokemap(client, message):
     location = args[1] if len(args) > 1 else None
     await client.send_message(message.channel,
                               pokemon.pokemap(username, location))
+
+
+async def cmd_pokemap_beta(client, message):
+    username = message.author.name
+    args = message.content.split(' ', 1)
+    location = args[1] if len(args) > 1 else None
+    await client.send_message(message.channel,
+                              pokemon.pokemap(username, location,
+                                              image='pokemap_beta'))
