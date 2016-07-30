@@ -18,6 +18,5 @@ def get_client():
 
 def inspect_by_name(client, name):
     ids = client.containers(filters=dict(name=name), quiet=True, all=True)
-    print(ids)
     if ids:
         return client.inspect_container(ids[0])

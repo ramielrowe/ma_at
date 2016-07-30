@@ -1,4 +1,5 @@
 import os
+import time
 
 import docker.errors
 
@@ -10,7 +11,7 @@ GOOGLE_MAPS_KEY = os.getenv('GOOGLE_MAPS_KEY')
 POKEMAP_DOMAIN = os.getenv('POKEMAP_DOMAIN')
 
 
-def pokemap(username, location, image='pokemap'):
+def pokemap(username, location, image='pokemap', steps='8'):
     container_name = 'pokemap-{}'.format(username)
 
     docker_client = docker_util.get_client()
@@ -33,12 +34,15 @@ def pokemap(username, location, image='pokemap'):
         docker_client.remove_container(existing_container['Id'],
                                        force=True,
                                        v=True)
+        while docker_util.inspect_by_name(docker_client, container_name):
+            time.sleep(0.1)
 
     env = {
         'GOOGLE_USER': GOOGLE_USER,
         'GOOGLE_PASSWORD': GOOGLE_PASSWORD,
         'GOOGLE_MAPS_KEY': GOOGLE_MAPS_KEY,
         'LOCATION': location,
+        'STEPS': steps,
     }
 
     host_config = docker_client.create_host_config(port_bindings={5000: None},

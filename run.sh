@@ -14,6 +14,7 @@ docker run -d --name ma-at-app \
     --restart always \
     --volumes-from ma-at-volumes \
     --volumes-from swarm-data \
+    -e "PYTHONUNBUFFERED=1" \
     -e "DATA_FILE=/var/ma_at/ma_at.json" \
     -e "DISCORD_TOKEN=${DISCORD_TOKEN}" \
     -e "STEAM_TOKEN=${STEAM_TOKEN}" \
