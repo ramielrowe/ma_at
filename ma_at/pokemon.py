@@ -5,8 +5,9 @@ import docker.errors
 
 from ma_at import docker_util
 
-GOOGLE_USER = os.getenv('GOOGLE_USER')
-GOOGLE_PASSWORD = os.getenv('GOOGLE_PASSWORD')
+POKEMAP_AUTH = os.getenv('POKEMAP_AUTH')
+POKEMAP_USER = os.getenv('POKEMAP_USER')
+POKEMAP_PASSWORD = os.getenv('POKEMAP_PASSWORD')
 GOOGLE_MAPS_KEY = os.getenv('GOOGLE_MAPS_KEY')
 POKEMAP_DOMAIN = os.getenv('POKEMAP_DOMAIN')
 
@@ -38,8 +39,9 @@ def pokemap(username, location, image='pokemap', steps='8'):
             time.sleep(0.1)
 
     env = {
-        'GOOGLE_USER': GOOGLE_USER,
-        'GOOGLE_PASSWORD': GOOGLE_PASSWORD,
+        'POKEMAP_AUTH': POKEMAP_AUTH,
+        'POKEMAP_USER': POKEMAP_USER,
+        'POKEMAP_PASSWORD': POKEMAP_PASSWORD,
         'GOOGLE_MAPS_KEY': GOOGLE_MAPS_KEY,
         'LOCATION': location,
         'STEPS': steps,
