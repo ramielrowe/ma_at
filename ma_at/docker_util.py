@@ -19,4 +19,7 @@ def get_client():
 def inspect_by_name(client, name):
     ids = client.containers(filters=dict(name=name), quiet=True, all=True)
     if ids:
-        return client.inspect_container(ids[0])
+        try:
+            return client.inspect_container(ids[0])
+        except docker.errors.NotFound as nfe:
+            pass
