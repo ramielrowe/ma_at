@@ -2,6 +2,8 @@ from ma_at import data
 from ma_at import pokemon
 from ma_at import steam
 
+POLL = None
+
 
 def get_function(command):
     return globals().get('cmd_{}'.format(command[1:]))
@@ -119,3 +121,40 @@ async def cmd_pokemap_beta(client, message):
     await client.send_message(message.channel,
                               pokemon.pokemap(username, location,
                                               image='pokemap_beta'))
+
+
+async def cmd_poll(client, message):
+    args = message.content.split(' ', 1)[1].split('|')
+    poll = args[0].strip()
+    options = [o.strip() for o in args[1:]]
+
+    global POLL
+    POLL = {
+        'poll': poll,
+        'options': {option.lower(): [] for option in options}
+    }
+    await client.send_message(message.channel,
+                              'Created new poll, use !vote to cast your vote.')
+
+async def cmd_vote(client, message):
+    username = message.author.name
+    args = message.content.split(' ', 1)
+    option = args[1].lower().strip()
+
+    if POLL and option in POLL['options']:
+        POLL['options'][option].append(username)
+        await client.send_message(message.channel, 'Ballot cast.')
+    else:
+        await client.send_message(message.channel, 'Invalid vote.')
+
+
+async def cmd_tally(client, message):
+
+    if POLL:
+        lines = [POLL['poll']]
+        for option, votes in POLL['options'].items():
+            lines.append('{}: {} ({})'.format(option,
+                                              len(votes), ', '.join(votes)))
+        await client.send_message(message.channel, '\n'.join(lines))
+    else:
+        await client.send_message(message.channel, 'No running poll.')
