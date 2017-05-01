@@ -149,7 +149,6 @@ async def cmd_vote(client, message):
 
 
 async def cmd_tally(client, message):
-
     if POLL:
         lines = [POLL['poll']]
         for option, votes in POLL['options'].items():
@@ -158,3 +157,26 @@ async def cmd_tally(client, message):
         await client.send_message(message.channel, '\n'.join(lines))
     else:
         await client.send_message(message.channel, 'No running poll.')
+
+
+async def cmd_page(client, message):
+    group = message.content.split(' ', 1)[1].lower()
+    users = ', '.join(data.get('page_groups.{}'.format(group), []))
+    if users:
+        await client.send_message(message.channel, 'Paging: {}'.format(users))
+
+
+async def cmd_pageme(client, message):
+    group = message.content.split(' ', 1)[1].lower()
+    users = data.get('page_groups.{}'.format(group), [])
+    if message.author.name not in users:
+        users.append(message.author.mention)
+        data.save()
+
+
+async def cmd_nopage(client, message):
+    group = message.content.split(' ', 1)[1].lower()
+    users = data.get('page_groups.{}'.format(group), [])
+    if message.author.name in users:
+        users.remove(message.author.mention)
+        data.save()

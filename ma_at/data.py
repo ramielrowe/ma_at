@@ -21,6 +21,6 @@ DATA = load()
 
 
 def get(key, default=None):
-    if not default:
+    if default is None:
         default = {}
     return DATA.setdefault(key, default)
